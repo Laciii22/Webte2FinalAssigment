@@ -1,2 +1,5 @@
-start w php artisan serve
+start
+
+php artisan serve
+
 composer install
