@@ -24,13 +24,17 @@ Route::middleware('guest')->group(function () {
     Route::post('reset-password', [NewPasswordController::class, 'store'])->name('password.store');
 
     Route::get('/{question}', [QuestionController::class, 'showByCode'])->where('question', '[A-Za-z0-9]{5}');
+
+    //Route::get('/{question}/result', [QuestionController::class, 'showResult'])->name('questions.question-result');
+
+    Route::post('/submit-response', [QuestionController::class, 'submitResponse'])->name('submitResponse');
 });
 
 Route::middleware('auth')->group(function () {
     Route::get('verify-email', EmailVerificationPromptController::class)->name('verification.notice');
     Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)->middleware(['signed', 'throttle:6,1'])->name('verification.verify');
     Route::post('email/verification-notification', [EmailVerificationNotificationController::class, 'store'])->middleware('throttle:6,1')
-                ->name('verification.send');
+        ->name('verification.send');
     Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])->name('password.confirm');
     Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
     Route::put('password', [PasswordController::class, 'update'])->name('password.update');

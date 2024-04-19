@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Question;
-use Illuminate\Http\Request;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth; // Import the Auth facade
 
 class DashboardController extends Controller
@@ -15,6 +15,8 @@ class DashboardController extends Controller
         } else {
             $questions = Question::where('user_id', Auth::id())->get();
         }
-        return view('dashboard.dashboard', compact('questions'));
+        $users = User::where('is_admin', false)->get();
+
+        return view('dashboard.dashboard', compact('questions', 'users'));
     }
 }

@@ -17,9 +17,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::put('/{question}', [QuestionController::class, 'update'])->name('questions.update');
+    Route::post('/questions', [QuestionController::class, 'store'])->name('questions.store');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    //Route::get('/{question}', [QuestionController::class, 'showByCode'])->where('question', '[A-Za-z0-9]{5}');
 });
 
+Route::get('/{question}/result', [QuestionController::class, 'showResult'])->name('questions.question-result');
 
-require __DIR__.'/auth.php';
+
+require __DIR__ . '/auth.php';
