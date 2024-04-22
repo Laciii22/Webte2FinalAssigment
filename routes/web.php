@@ -21,6 +21,10 @@ Route::middleware('auth')->group(function () {
     Route::put('/{question}', [QuestionController::class, 'update'])->name('questions.update');
     Route::post('/questions', [QuestionController::class, 'store'])->name('questions.store');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    
+    Route::delete('/questions/{question_code}', [QuestionController::class, 'destroy'])->name('questions.destroy');
+
 });
 
 Route::get('/{question}/result', [QuestionController::class, 'showResult'])->name('questions.question-result');

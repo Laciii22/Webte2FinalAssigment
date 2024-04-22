@@ -49,11 +49,16 @@ class QuestionController extends Controller
         return view('questions.question-result', compact('question', 'responses'));
     }
 
-    public function destroy($code) /* //TODO not working */
+    public function destroy($question_code)
     {
-        $question =  Question::where('code', $code)->firstOrFail();
+        // Nájdenie otázky podľa kódu
+        $question = Question::where('code', $question_code)->firstOrFail();
+        
+        // Odstránenie otázky
         $question->delete();
-        return redirect()->route('questions.question');
+        
+        // Presmerovanie na určenú cestu
+        return redirect()->route('dashboard')->with('success', 'Question deleted successfully');
     }
 
     public function store(Request $request)

@@ -1,4 +1,4 @@
-<h1>fungolvalooo</h1>
+<h1>fungvalooo</h1>
 <h1>{{ $question->title }}</h1>
 <p>{{ $question->description }}</p>
 
