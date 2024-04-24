@@ -1,9 +1,4 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
     <div id="editModal" class="fixed inset-0 overflow-y-auto hidden">
         <div class="flex items-center justify-center min-h-screen px-4 pb-20 text-center">
             <!-- Background overlay -->
@@ -11,7 +6,7 @@
                 <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
             </div>
 
-            <!-- Modal content -->
+            <!-- Modal content edit-->
             <div class="inline-block align-middle bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                 <div class="modal-content">
                     <h4 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight p-3">Edit Question</h4>
@@ -77,21 +72,30 @@
                             </select>
                         </div>
                         <div class="mb-4">
-                            <label for="category" class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">category</label>
+                            <label for="category" class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Category</label>
                             <select name="category" id="category" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-white">
                                 <option value="text">Text</option>
                                 <option value="input">Input</option>
                             </select>
                         </div>
 
+                        <div id="input-options" style="display: none;">
+                            <label for="input_options" class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Input Options</label>
+                            <input type="text" name="input_options[]" id="input_options" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-white" placeholder="Enter option">
+                            <button type="button" id="add-option">Add Option</button>
+                        </div>
+
+
                         @if(Auth::user()->isAdmin())
                         <label for="user_id">Select User:</label>
                         <select name="user_id" id="user_id" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-white">
+                            <option value="{{ Auth::user()->id }}">{{ Auth::user()->name }}</option>
                             @foreach($users as $user)
                             <option value="{{ $user->id }}">{{ $user->name }}</option>
                             @endforeach
                         </select>
                         @endif
+
 
 
                         <!-- Add more form fields as needed -->
@@ -119,6 +123,7 @@
         </div>
     </div>
 
+
     @foreach($questions as $question)
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -136,7 +141,7 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     Active: {{ $question->active }}
                 </div>
-                <div class="p-6 text-gray-900 dark:text-gray-100">
+                <div class="p-6 text-gray-900 dark:text-gray-100 sm:flex gap-1">
                     <!-- ///TODO -->
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded edit-button" data-question="{{ json_encode($question) }}">Edit</button>
                     <form id="deleteForm" action="{{ route('questions.destroy', ['question_code' => $question->code]) }}" method="POST">
@@ -200,4 +205,31 @@
         form.querySelector('input[name="question_code"]').value = questionCode;
         form.submit();
     }
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const categorySelect = document.getElementById('category');
+        const inputOptions = document.getElementById('input-options');
+
+        categorySelect.addEventListener('change', function() {
+            if (categorySelect.value === 'input') {
+                inputOptions.style.display = 'block';
+            } else {
+                inputOptions.style.display = 'none';
+            }
+        });
+
+        const addOptionButton = document.getElementById('add-option');
+        if (addOptionButton) {
+            addOptionButton.addEventListener('click', function() {
+                const inputOptions = document.getElementById('input-options');
+                const inputField = document.createElement('input');
+                inputField.type = 'text';
+                inputField.name = 'input_options[]';
+                inputField.classList.add('shadow', 'appearance-none', 'border', 'rounded', 'w-full', 'py-2', 'px-3', 'text-gray-700', 'leading-tight', 'focus:outline-none', 'focus:shadow-outline', 'dark:bg-gray-700', 'dark:text-white');
+                inputField.placeholder = 'Enter option';
+                inputOptions.appendChild(inputField);
+            });
+        }
+    });
 </script>
