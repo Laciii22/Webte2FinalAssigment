@@ -13,32 +13,50 @@ class QuestionController extends Controller
     {
         $question = Question::where('code', $code)->firstOrFail();
         $responses = Response::where('question_code', $code)->get();
-    
+
         return view('questions.question', compact('question', 'responses'));
     }
-    
+
 
     public function submitResponse(Request $request)
     {
-        $validatedData = $request->validate([
-            'response' => 'required|array', // Uistite sa, že je vybraná aspoň jedna možnosť
-            'response.*' => 'exists:responses,id', // Uistite sa, že ID možností sú platné
-        ]);
-    
-        // Nájdite otázku podľa kódu
+
         $questionCode = $request->input('question_code');
         $question = Question::where('code', $questionCode)->firstOrFail();
-    
-        // Prejdite cez každú vybranú možnosť a aktualizujte počet výberov
-        foreach ($validatedData['response'] as $responseId) {
-            $response = Response::findOrFail($responseId);
-            $response->increment('count'); // Zvýšte počet výberov o 1
+
+        if ($question->category === "text") {
+            $validatedData = $request->validate([
+                'text_input' => 'required|string',
+            ]);
+
+            $response = Response::where('question_code', $questionCode)
+                ->where('selected_value', $validatedData['text_input'])
+                ->first();
+
+            if ($response) {
+                $response->increment('count');
+            } else {
+                Response::create([
+                    'question_code' => $questionCode,
+                    'selected_value' => $validatedData['text_input'],
+                    'count' => 1
+                ]);
+            }
+        } else {
+            $validatedData = $request->validate([
+                'response' => 'required|array', // Make sure at least one option is selected
+                'response.*' => 'exists:responses,id', // Make sure option IDs are valid
+            ]);
+            // Iterate through each selected option and update the selection count
+            foreach ($validatedData['response'] as $responseId) {
+                $response = Response::findOrFail($responseId);
+                $response->increment('count');
+            }
         }
-    
         // Voliteľne presmerujte na inú stránku
         return redirect()->route('questions.question-result', [$questionCode])->with('message', 'State saved correctly!!!');
     }
-    
+
 
     public function showResult($questionCode)
     {
@@ -55,10 +73,10 @@ class QuestionController extends Controller
     {
         // Nájdenie otázky podľa kódu
         $question = Question::where('code', $question_code)->firstOrFail();
-        
+
         // Odstránenie otázky
         $question->delete();
-        
+
         // Presmerovanie na určenú cestu
         return redirect()->route('dashboard')->with('success', 'Question deleted successfully');
     }
@@ -82,14 +100,16 @@ class QuestionController extends Controller
             'category' => $request->category,
         ]);
 
-        // Create responses
-        $inputOptions = $request->input('input_options');
-        foreach ($inputOptions as $option) {
-            Response::create([
-                'question_code' => $question->code, // Assuming 'code' is the question code
-                'selected_value' => $option,
-                // Add other necessary fields here
-            ]);
+        // Create responses for input questions
+        if ($question->category !== "text") {
+            $inputOptions = $request->input('input_options');
+            foreach ($inputOptions as $option) {
+                Response::create([
+                    'question_code' => $question->code, // Assuming 'code' is the question code
+                    'selected_value' => $option,
+                    // Add other necessary fields here
+                ]);
+            }
         }
 
         // Redirect to dashboard
