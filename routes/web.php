@@ -28,6 +28,10 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/{question}/result', [QuestionController::class, 'showResult'])->name('questions.question-result');
+Route::get('/questions/{question_code}', [QuestionController::class, 'showByCode'])->name('questions.show');
+Route::post('/questions/{question_code}', [QuestionController::class, 'submitResponse'])->name('submitResponse');
+
+
 
 
 require __DIR__ . '/auth.php';

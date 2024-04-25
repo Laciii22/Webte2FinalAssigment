@@ -7,36 +7,38 @@ use App\Models\Question;
 use App\Models\Response;
 use Illuminate\Support\Facades\Redirect;
 
-
 class QuestionController extends Controller
 {
     public function showByCode($code)
     {
         $question = Question::where('code', $code)->firstOrFail();
-        return view('questions.question', compact('question'));
+        $responses = Response::where('question_code', $code)->get();
+    
+        return view('questions.question', compact('question', 'responses'));
     }
+    
 
     public function submitResponse(Request $request)
     {
         $validatedData = $request->validate([
-            'text_input' => 'required|string',
-            // Add more validation rules if needed
+            'response' => 'required|array', // Uistite sa, že je vybraná aspoň jedna možnosť
+            'response.*' => 'exists:responses,id', // Uistite sa, že ID možností sú platné
         ]);
-
-        // Assuming you have access to the question code from the view
+    
+        // Nájdite otázku podľa kódu
         $questionCode = $request->input('question_code');
-
-        // Create a response record
-        Response::create([
-            'question_code' => $questionCode,
-            'selected_value' => $validatedData['text_input']
-        ]);
-
-        // Optionally redirect to another page
-        return Redirect::route('questions.question-result', [$questionCode])->with('message', 'State saved correctly!!!');
-
-        //return redirect()->route('questions.question-result');
+        $question = Question::where('code', $questionCode)->firstOrFail();
+    
+        // Prejdite cez každú vybranú možnosť a aktualizujte počet výberov
+        foreach ($validatedData['response'] as $responseId) {
+            $response = Response::findOrFail($responseId);
+            $response->increment('count'); // Zvýšte počet výberov o 1
+        }
+    
+        // Voliteľne presmerujte na inú stránku
+        return redirect()->route('questions.question-result', [$questionCode])->with('message', 'State saved correctly!!!');
     }
+    
 
     public function showResult($questionCode)
     {
@@ -72,7 +74,7 @@ class QuestionController extends Controller
         ]);
 
         // Create new question
-        Question::create([
+        $question = Question::create([
             'title' => $request->title,
             'body' => $request->body,
             'active' => $request->active,
@@ -80,9 +82,20 @@ class QuestionController extends Controller
             'category' => $request->category,
         ]);
 
+        // Create responses
+        $inputOptions = $request->input('input_options');
+        foreach ($inputOptions as $option) {
+            Response::create([
+                'question_code' => $question->code, // Assuming 'code' is the question code
+                'selected_value' => $option,
+                // Add other necessary fields here
+            ]);
+        }
+
         // Redirect to dashboard
-        return redirect('/dashboard');
+        return redirect('/dashboard')->with('success', 'Question created successfully');
     }
+
     public function update(Request $request, Question $question)
     {
         // Validation

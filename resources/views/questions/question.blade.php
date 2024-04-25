@@ -22,23 +22,20 @@
                     <input type="text" name="text_input" placeholder="Enter text here">
                 </div>
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit
-                        Text</button>
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit Text</button>
                 </div>
             </form>
             @else
-            <form action="" method="POST">
+            <form action="{{ route('submitResponse', $question->code) }}" method="POST">
                 @csrf
                 <input type="hidden" name="question_code" value="{{ $question->code }}">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <input type="checkbox" name="option_a" value="A"> Option A <br>
-                    <input type="checkbox" name="option_b" value="B"> Option B <br>
-                    <input type="checkbox" name="option_c" value="C"> Option C <br>
-                    <input type="checkbox" name="option_d" value="D"> Option D <br>
+                    @foreach($responses as $response)
+                        <input type="radio" name="response[]" value="{{ $response->id }}"> {{ $response->selected_value }} <br>
+                    @endforeach
                 </div>
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit
-                        Options</button>
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit Options</button>
                 </div>
             </form>
             @endif

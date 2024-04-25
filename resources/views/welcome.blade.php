@@ -61,7 +61,10 @@
     <script>
         function submitVotingCode() {
             var votingCode = document.getElementById("votingCode").value;
-            window.location.href = "http://127.0.0.1:8000/" + encodeURIComponent(votingCode);
+            console.log("Happened");
+            var url = "{{ route('questions.show', ':votingCode') }}";
+            url = url.replace(':votingCode', encodeURIComponent(votingCode));
+            window.location.href = url;
         }
     </script>
 </body>

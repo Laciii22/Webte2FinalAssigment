@@ -9,20 +9,23 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
         Schema::create('responses', function (Blueprint $table) {
             $table->id();
-            $table->string('question_code'); // Keep as string for question code
+            $table->string('question_code'); 
             $table->string('selected_value');
             $table->timestamps();
+            $table->integer('count')->default(0); 
 
-            // Add foreign key constraint
             $table->foreign('question_code')->references('code')->on('questions')->onDelete('cascade');
         });
     }
 
-    public function down()
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
     {
         Schema::dropIfExists('responses');
     }
