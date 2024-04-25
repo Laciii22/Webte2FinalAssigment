@@ -9,22 +9,24 @@
             <!-- Modal content edit-->
             <div class="inline-block align-middle bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                 <div class="modal-content">
-                    <h4 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight p-3">Edit Question</h4>
+                    <h4 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight p-3">Edit Question
+                    </h4>
                     <form id="editForm" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="px-4 py-5 sm:px-6">
-                            <div class="mb-4">
+                            <div class="mb-2">
                                 <label for="edit-title" class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Title</label>
                                 <input type="text" name="title" id="edit-title" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-white" placeholder="Enter title" required>
                             </div>
-                            <div class="mb-4">
+                            <div class="mb-2">
                                 <label for="edit-body" class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Body</label>
                                 <textarea name="body" id="edit-body" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-white" placeholder="Enter body" required></textarea>
                             </div>
                         </div>
                         <div class=" px-4 py-4 sm:px-6 sm:flex sm:flex-row-reverse">
-                            <button type="button" onclick="submitEditForm()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1">Save Changes</button>
+                            <button type="button" onclick="submitEditForm()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1">Save
+                                Changes</button>
                             <button type="button" onclick="closeEditModal()" class="mt-3 w-full sm:mt-0 sm:w-auto bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Cancel</button>
                         </div>
                     </form>
@@ -80,7 +82,8 @@
                         </div>
 
                         <div id="input-options" style="display: none;">
-                            <label for="input_options" class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Input Options</label>
+                            <label for="input_options" class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Input
+                                Options</label>
                             <input type="text" name="input_options[]" id="input_options" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-white" placeholder="Enter option">
                             <button type="button" id="add-option">Add Option</button>
                         </div>
@@ -110,7 +113,7 @@
     </div>
 
 
-    <div class="py-12">
+    <div class="pt-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
@@ -122,24 +125,30 @@
 
 
     @foreach($questions as $question)
-    <div class="py-12">
+    <div class="pt-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    Code: {{ $question->code }}
-                    <a href="{{ route('questions.question-result', ['question' => $question->code]) }}" class="text-blue-500 hover:underline">Go to Result</a>
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-4">
+                <div class="grid gap-6 mb-2 md:grid-cols-2">
+                    <div>
+                        <label for="code" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Code</label>
+                        <input type="text" id="code" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John Doe" value="{{$question->code}}" disabled />
+                    </div>
+                    <div>
+                        <label for=" title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
+                        <input type="text" id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="example@example.com" value="{{$question->title}}" disabled />
+                    </div>
                 </div>
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    Title: {{ $question->title }}
+                <div class="grid gap-6 mb-2 md:grid-cols-2">
+                    <div>
+                        <label for="body" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Body</label>
+                        <input type="text" id="body" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John Doe" value="{{$question->body}}" disabled />
+                    </div>
+                    <div>
+                        <label for=" active" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
+                        <input type="text" id="active" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="example@example.com" value="{{$question->active}}" disabled />
+                    </div>
                 </div>
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    Body: {{ $question->body }}
-                </div>
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    Active: {{ $question->active }}
-                </div>
-                <div class="p-6 text-gray-900 dark:text-gray-100 sm:flex gap-1">
-                    <!-- ///TODO -->
+                <div class=" text-gray-900 dark:text-gray-100 sm:flex gap-1 flex justify-end">
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded edit-button" data-question="{{ json_encode($question) }}">Edit</button>
                     <form id="deleteForm" action="{{ route('questions.destroy', ['question_code' => $question->code]) }}" method="POST">
                         @csrf
@@ -157,19 +166,20 @@
 
 <script>
     function openModal() {
-        document.getElementById('modal').classList.add('flex');
+        document.getElementById('modal').classList.add('fixed');
         document.getElementById('modal').classList.remove('hidden');
     }
 
     function closeModal() {
         document.getElementById('modal').classList.add('hidden');
-        document.getElementById('modal').classList.remove('flex');
+        document.getElementById('modal').classList.remove('fixed');
     }
 
     var editButtons = document.querySelectorAll('.edit-button');
     editButtons.forEach(button => {
         button.addEventListener('click', function() {
             var question = JSON.parse(this.getAttribute('data-question'));
+            console.log(question);
             console.log(question);
             openEditModal(question);
         });
@@ -179,7 +189,8 @@
     function openEditModal(question) {
         document.getElementById('edit-title').value = question.title;
         document.getElementById('edit-body').value = question.body;
-        document.getElementById('editForm').action = '{{ route("questions.update", ["question" => "__question_code__"]) }}'.replace('__question_code__', question.code);
+        document.getElementById('editForm').action = '{{ route("questions.update", ["question" => "__question_code__"]) }}'
+            .replace('__question_code__', question.code);
         document.getElementById('editModal').classList.remove('hidden');
     }
 
@@ -199,7 +210,8 @@
         var questionCode = event.target.dataset.questionCode;
         console.log(questionCode);
         var form = document.getElementById('deleteForm');
-        form.querySelector('input[name="question_code"]').value = questionCode;
+        form.
+        querySelector('input[name="question_code"]').value = questionCode;
         form.submit();
     }
 
@@ -223,7 +235,9 @@
                 const inputField = document.createElement('input');
                 inputField.type = 'text';
                 inputField.name = 'input_options[]';
-                inputField.classList.add('shadow', 'appearance-none', 'border', 'rounded', 'w-full', 'py-2', 'px-3', 'text-gray-700', 'leading-tight', 'focus:outline-none', 'focus:shadow-outline', 'dark:bg-gray-700', 'dark:text-white');
+                inputField.classList.add('shadow', 'appearance-none', 'border', 'rounded', 'w-full', 'py-2',
+                    'px-3', 'text-gray-700', 'leading-tight', 'focus:outline-none',
+                    'focus:shadow-outline', 'dark:bg-gray-700', 'dark:text-white');
                 inputField.placeholder = 'Enter option';
                 inputOptions.appendChild(inputField);
             });

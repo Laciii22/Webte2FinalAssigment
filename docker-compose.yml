@@ -1,4 +1,14 @@
 services:
+    voting-service:
+        container_name: voting-service
+        build:
+            dockerfile: Dockerfile
+        environment:
+            - COMPOSER_ALLOW_SUPERUSER=1
+        ports:
+            - 8000:80
+        depends_on:
+            - mysql
     mysql:
         image: mysql:8.0
         container_name: mysql_webte

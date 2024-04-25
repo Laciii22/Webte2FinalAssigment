@@ -14,7 +14,7 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     @if(Auth::user()->isAdmin())
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
+                    <x-nav-link :href="route('dashboard-users')" :active="request()->routeIs('dashboard-users')">
                         <!--//TODO toto nie je uprvit na users stranku  -->
                         {{ __('Users') }}
                     </x-nav-link>
@@ -92,6 +92,7 @@
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
+
 
 
                     <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
