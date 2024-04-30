@@ -1,3 +1,5 @@
+<script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+
 <x-app-layout>
     <div id="editModal" class="fixed inset-0 overflow-y-auto hidden">
         <div class="flex items-center justify-center min-h-screen px-4 pb-20 text-center">
@@ -138,10 +140,10 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     Active: {{ $question->active }}
                 </div>
+                <div class="qrcode-container p-6" id="qrcode-{{ $question->code }}" data-question-code="{{ $question->code }}"></div>
                 <div class="p-6 text-gray-900 dark:text-gray-100 sm:flex gap-1">
-                    <!-- ///TODO -->
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded edit-button" data-question="{{ json_encode($question) }}">Edit</button>
-                    <form id="deleteForm" action="{{ route('questions.destroy', ['question_code' => $question->code]) }}" method="POST">
+                    <form class="delete-form" action="{{ route('questions.destroy', ['question_code' => $question->code]) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <input type="hidden" name="question_code" value="{{ $question->code }}">
@@ -149,6 +151,7 @@
                     </form>
                 </div>
             </div>
+
         </div>
     </div>
     @endforeach
@@ -156,6 +159,25 @@
 </x-app-layout>
 
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        createAndDisplayQRCodes();
+    });
+
+    function createAndDisplayQRCodes() {
+        var questionContainers = document.querySelectorAll('.qrcode-container');
+        questionContainers.forEach(function(container) {
+            var questionCode = container.getAttribute('data-question-code');
+            var qr = new QRCode(container, {
+                text: 'http://localhost:8000/' + questionCode,
+                width: 128,
+                height: 128,
+                colorDark: '#000000',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        });
+    }
+
     function openModal() {
         document.getElementById('modal').classList.add('flex');
         document.getElementById('modal').classList.remove('hidden');

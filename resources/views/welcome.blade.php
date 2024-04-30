@@ -10,9 +10,19 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <style>
+        body {
+            background-image: url('https://variety.com/wp-content/uploads/2023/12/YVYV_Main.jpg?w=1000&h=563&crop=1');
+            background-color: rgba(0, 0, 0, 0.7);
+            background-blend-mode: multiply;
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
 </head>
 
-<body class="flex items-center justify-center h-screen kk">
+<body class="flex items-center justify-center h-screen">
     <div class="w-full max-w-sm p-8 bg-black bg-opacity-70 rounded-lg shadow-lg">
         <header class="mb-4">
             @if (Route::has('login'))
@@ -53,7 +63,6 @@
             var votingCode = document.getElementById("votingCode").value;
             console.log("Happened");
             var url = "{{ route('test', ':votingCode') }}";
-
             url = url.replace(':votingCode', encodeURIComponent(votingCode));
             window.location.href = url;
         }

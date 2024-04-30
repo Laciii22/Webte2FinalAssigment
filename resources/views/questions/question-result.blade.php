@@ -1,6 +1,5 @@
 @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <div class="min-h-screen bg-gradient-to-br from-teal-100 to-teal-300">
@@ -28,7 +27,15 @@
                     </canvas>
                 </div>
             </div>
-
+            @else
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg md:w-1/2">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <h2 class="text-xl font-bold">Responses:</h2>
+                    @foreach($responses as $response)
+                    <div>{{ $response->selected_value }}</div>
+                    @endforeach
+                </div>
+            </div>
             @endif
         </div>
     </div>
