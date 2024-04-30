@@ -1,33 +1,35 @@
-FROM php:8.2-apache
+# Use the PHP 8.2 image for CLI applications
+FROM php:8.2-cli
 
-# Install dependencies
-RUN apt-get update && \
-    apt-get install -y \
-    libzip-dev \
-    zip
+# Update package lists and install necessary dependencies
+RUN apt-get update -y && apt-get install -y libmcrypt-dev unzip git nodejs npm
 
-# Enable mod_rewrite
-RUN a2enmod rewrite
-
-# Install PHP extensions
-RUN docker-php-ext-install pdo_mysql zip
-
-ENV COMPOSER_ALLOW_SUPERUSER=1
-ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
-RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
-
-WORKDIR /var/www/html
-# Copy the application code
-COPY . /var/www/html
-
-# Set the working directory
-
-# Install composer
+# Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Install project dependencies
+# Install PDO extension
+RUN docker-php-ext-install mysqli pdo pdo_mysql
+
+# Set environment variable to allow Composer to run as superuser
+ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV APP_KEY=base64:O8vPd4T6U8+53G601yo1UzaYGLyv3oAqQccY85OaTtg=
+
+# Set working directory
+WORKDIR /app
+
+# Copy application files
+COPY . /app
+
+# Install PHP dependencies using Composer
 RUN composer install
 
-# Set permissions
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
+# Install JavaScript dependencies using npm
+RUN npm install
+
+#RUN npm run build
+
+# Expose port 8000
+EXPOSE 8000
+
+# Command to run the PHP server and compile front-end assets
+CMD sh -c "php artisan serve --host=0.0.0.0 --port=8000"

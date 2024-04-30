@@ -25,7 +25,6 @@ database/MySQL
 *.config.js
 ?ulpfile.js
 ?untfile.js
-package.json
 phpunit.xml
 readme.md
 phpspec.yml
