@@ -150,16 +150,11 @@
                         <input type="text" id="active" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="example@example.com" value="{{$question->active}}" disabled />
                     </div>
                 </div>
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    Body: {{ $question->body }}
-                </div>
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    Active: {{ $question->active }}
-                </div>
+
                 <div class="qrcode-container p-6" id="qrcode-{{ $question->code }}" data-question-code="{{ $question->code }}"></div>
-                <div class="p-6 text-gray-900 dark:text-gray-100 sm:flex gap-1">
+                <div class=" text-gray-900 dark:text-gray-100 sm:flex gap-1 flex justify-end">
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded edit-button" data-question="{{ json_encode($question) }}">Edit</button>
-                    <form class="delete-form" action="{{ route('questions.destroy', ['question_code' => $question->code]) }}" method="POST">
+                    <form id="deleteForm" action="{{ route('questions.destroy', ['question_code' => $question->code]) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <input type="hidden" name="question_code" value="{{ $question->code }}">
