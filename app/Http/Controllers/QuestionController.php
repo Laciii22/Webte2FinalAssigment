@@ -129,7 +129,6 @@ class QuestionController extends Controller
             'title' => $request->title,
             'body' => $request->body,
         ]);
-
         // Redirect back with success message or to a specific route
         return redirect()->back()->with('success', 'Question updated successfully');
     }

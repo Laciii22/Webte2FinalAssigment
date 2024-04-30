@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -21,6 +22,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/{question}', [QuestionController::class, 'update'])->name('questions.update');
     Route::post('/questions', [QuestionController::class, 'store'])->name('questions.store');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::get('/dashboard-users', [UserController::class, 'index'])->name('dashboard-users');
 
 
     Route::delete('/questions/{question_code}', [QuestionController::class, 'destroy'])->name('questions.destroy');
