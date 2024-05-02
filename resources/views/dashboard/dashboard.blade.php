@@ -1,7 +1,7 @@
 <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
 
 <x-app-layout>
-    <div id="editModal" class="fixed inset-0 overflow-y-auto hidden">
+    <div id="editModal" class="fixed inset-0 overflow-y-auto hidden " onclick="closeEditModal()" >
         <div class="flex items-center justify-center min-h-screen px-4 pb-20 text-center">
             <!-- Background overlay -->
             <div class="fixed inset-0 transition-opacity" aria-hidden="true">
@@ -46,7 +46,7 @@
     <div class="fixed inset-0 overflow-y-auto hidden" id="modal">
         <div class="flex items-center justify-center min-h-screen px-4 pb-20 text-center">
             <!-- Background overlay -->
-            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true" onclick="closeModal()">
                 <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
             </div>
 
@@ -127,45 +127,58 @@
 
 
     @foreach($questions as $question)
-    <div class="pt-6">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-4">
-                <div class="grid gap-6 mb-2 md:grid-cols-2">
-                    <div>
-                        <label for="code" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Code</label>
-                        <input type="text" id="code" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John Doe" value="{{$question->code}}" disabled />
-                    </div>
-                    <div>
-                        <label for=" title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
-                        <input type="text" id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="example@example.com" value="{{$question->title}}" disabled />
-                    </div>
+<div class="pt-6">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-4">
+            <div class="grid gap-6 mb-2 md:grid-cols-2">
+                <div>
+                    <label for="code" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Code</label>
+                    <input type="text" id="code" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John Doe" value="{{$question->code}}" disabled />
                 </div>
-                <div class="grid gap-6 mb-2 md:grid-cols-2">
-                    <div>
-                        <label for="body" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Body</label>
-                        <input type="text" id="body" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John Doe" value="{{$question->body}}" disabled />
-                    </div>
-                    <div>
-                        <label for=" active" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
-                        <input type="text" id="active" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="example@example.com" value="{{$question->active}}" disabled />
-                    </div>
+                <div>
+                    <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
+                    <input type="text" id="title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="example@example.com" value="{{$question->title}}" disabled />
                 </div>
-
-                <div class="qrcode-container p-6" id="qrcode-{{ $question->code }}" data-question-code="{{ $question->code }}"></div>
-                <div class=" text-gray-900 dark:text-gray-100 sm:flex gap-1 flex justify-end">
-                    <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded edit-button" data-question="{{ json_encode($question) }}">Edit</button>
-                    <form id="deleteForm" action="{{ route('questions.destroy', ['question_code' => $question->code]) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <input type="hidden" name="question_code" value="{{ $question->code }}">
-                        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
-                    </form>
+            </div>
+            <div class="grid gap-6 mb-2 md:grid-cols-2">
+                <div>
+                    <label for="body" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Body</label>
+                    <input type="text" id="body" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John Doe" value="{{$question->body}}" disabled />
+                </div>
+                <div>
+                    <label for="active" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Active</label>
+                    <input type="text" id="active" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="example@example.com" value="{{$question->active}}" disabled />
                 </div>
             </div>
 
+            <div class="text-gray-900 dark:text-gray-100 sm:flex gap-1 flex justify-end">
+                <button onclick="openModalQr('{{ $question->code }}')" class="bg-gray-900 hover:bg-black text-white font-bold py-2 px-4 rounded">Show QR code</button>
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded edit-button" data-question="{{ json_encode($question) }}">Edit</button>
+                <form id="deleteForm" class="m-0" action="{{ route('questions.destroy', ['question_code' => $question->code]) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <input type="hidden" name="question_code" value="{{ $question->code }}">
+                    <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
+                </form>
+            </div>
         </div>
     </div>
-    @endforeach
+</div>
+
+<div class="hidden fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50" id="modal-{{ $question->code }}" onclick="closeModalQr('{{ $question->code }}')">
+    <div class="flex items-center justify-center h-full">
+        <div class="bg-white p-8 rounded-lg" onclick="event.stopPropagation()">
+            <div class="qrcode-container" id="qrcode-{{ $question->code }}" data-question-code="{{ $question->code }}"></div>
+            <button onclick="closeModalQr('{{ $question->code }}')" class="absolute top-0 right-0 m-4 text-gray-500 hover:text-gray-900">&times;</button>
+        </div>
+    </div>
+</div>
+
+@endforeach
+
+
+
+
 
 </x-app-layout>
 
@@ -180,8 +193,8 @@
             var questionCode = container.getAttribute('data-question-code');
             var qr = new QRCode(container, {
                 text: 'http://localhost:8000/' + questionCode,
-                width: 128,
-                height: 128,
+                width: 512,
+                height: 512 ,
                 colorDark: '#000000',
                 colorLight: '#ffffff',
                 correctLevel: QRCode.CorrectLevel.H
@@ -198,6 +211,16 @@
         document.getElementById('modal').classList.add('hidden');
         document.getElementById('modal').classList.remove('fixed');
     }
+
+    function openModalQr(questionCode) {
+    var modal = document.getElementById('modal-' + questionCode);
+    modal.classList.remove('hidden');
+}
+
+function closeModalQr(questionCode) {
+    var modal = document.getElementById('modal-' + questionCode);
+    modal.classList.add('hidden');
+}
 
     var editButtons = document.querySelectorAll('.edit-button');
     editButtons.forEach(button => {
