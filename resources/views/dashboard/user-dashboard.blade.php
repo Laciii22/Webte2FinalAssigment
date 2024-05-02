@@ -4,7 +4,7 @@
     <div class="fixed w-full hidden" id="modal">
         <div class="flex items-center justify-center min-h-screen px-4 pb-20 text-center">
             <!-- Background overlay -->
-            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
+            <div class="fixed inset-0 transition-opacity" aria-hidden="true" onclick="closeModal()">
                 <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
             </div>
 

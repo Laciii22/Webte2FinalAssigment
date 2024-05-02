@@ -1,10 +1,11 @@
 @vite(['resources/css/app.css', 'resources/js/app.js'])
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
 <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-teal-100 to-teal-300">
 
-    <div class="py-12 w-1/2 relative">
-        <img src="https://i.pngimg.me/thumb/f/720/m2H7K9Z5i8G6d3G6.jpg" class="absolute top-20 right-20 w-32 h-32 rounded-full ring-4 ring-teal-600 hidden md:block" alt="Voting Badge">
+    <div class="py-12 w-full md:w-1/2 relative"> <!-- Adjusted width classes -->
+        <img src="https://i.pngimg.me/thumb/f/720/m2H7K9Z5i8G6d3G6.jpg" class="absolute top-20 right-10 w-32 h-32 rounded-full ring-4 ring-teal-600" alt="Voting Badge">
         <div class="w-full md:max-w-7xl  sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
