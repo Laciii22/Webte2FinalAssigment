@@ -1,4 +1,5 @@
 <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+@vite('resources/js/test.js')
 
 <x-app-layout>
     <div id="editModal" class="fixed inset-0 overflow-y-auto hidden">
@@ -224,6 +225,7 @@
     }
 
     // Funkcia na odoslanie formulára pre editáciu
+
     function submitEditForm() {
         document.getElementById('editForm').submit();
     }
