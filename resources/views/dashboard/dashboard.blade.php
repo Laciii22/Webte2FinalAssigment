@@ -4,50 +4,12 @@
 @include('components.create-question-modal')
 @include('components.edit-modal')
 
-
-
 <x-modal name="qrcode-modal">
     <div id="qrcode-content-parent">
     </div>
 </x-modal>
 
-
-
 <x-app-layout>
-    <!--   <div id="editModal" class="fixed inset-0 overflow-y-auto hidden " onclick="closeEditModal()">
-        <div class="flex items-center justify-center min-h-screen px-4 pb-20 text-center">
-            <div class="fixed inset-0 transition-opacity" aria-hidden="true">
-                <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-            </div>
-
-            <div class="inline-block align-middle bg-white dark:bg-gray-800 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-                <div class="modal-content">
-                    <h4 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight p-3">Edit Question
-                    </h4>
-                    <form id="editForm" method="POST">
-                        @csrf
-                        @method('PUT')
-                        <div class="px-4 py-5 sm:px-6">
-                            <div class="mb-2">
-                                <label for="edit-title" class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Title</label>
-                                <input type="text" name="title" id="edit-title" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-white" placeholder="Enter title" required>
-                            </div>
-                            <div class="mb-2">
-                                <label for="edit-body" class="block text-gray-700 dark:text-gray-300 text-sm font-bold mb-2">Body</label>
-                                <textarea name="body" id="edit-body" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-white" placeholder="Enter body" required></textarea>
-                            </div>
-                        </div>
-                        <div class=" px-4 py-4 sm:px-6 sm:flex sm:flex-row-reverse">
-                            <button type="button" onclick="submitEditForm()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1">Save
-                                Changes</button>
-                            <button type="button" onclick="closeEditModal()" class="mt-3 w-full sm:mt-0 sm:w-auto bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Cancel</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
- -->
 
     <div class="pt-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
@@ -140,153 +102,8 @@
                         <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</button>
                     </form>
                 </div>
-
-
             </div>
         </div>
     </div>
-
-    <div class="hidden fixed inset-0 z-50 overflow-auto bg-black bg-opacity-50" id="modal-{{ $question->code }}" onclick="closeModalQr('{{ $question->code }}')">
-        <div class="flex items-center justify-center h-full">
-            <div class="bg-white p-8 rounded-lg" onclick="event.stopPropagation()">
-                <div class="qrcode-container" id="qrcode-{{ $question->code }}" data-question-code="{{ $question->code }}"></div>
-                <button onclick="closeModalQr('{{ $question->code }}')" class="absolute top-0 right-0 m-4 text-gray-500 hover:text-gray-900">&times;</button>
-            </div>
-        </div>
-    </div>
-
     @endforeach
-
-
-
-
-
 </x-app-layout>
-
-<script>
-    /*     document.addEventListener('DOMContentLoaded', function() {
-        createAndDisplayQRCodes();
-    });
-
-    function createAndDisplayQRCodes() {
-        var questionContainers = document.querySelectorAll('.qrcode-container');
-        questionContainers.forEach(function(container) {
-            var questionCode = container.getAttribute('data-question-code');
-            var qr = new QRCode(container, {
-                text: 'http://localhost:8000/' + questionCode,
-                width: 512,
-                height: 512,
-                colorDark: '#000000',
-                colorLight: '#ffffff',
-                correctLevel: QRCode.CorrectLevel.H
-            });
-        });
-    }
- */
-    /*     function openModal() {
-            document.getElementById('modal').classList.add('fixed');
-            document.getElementById('modal').classList.remove('hidden');
-        }
-
-        function closeModal() {
-            document.getElementById('modal').classList.add('hidden');
-            document.getElementById('modal').classList.remove('fixed');
-        }
-
-        function openModalQr(questionCode) {
-            var modal = document.getElementById('modal-' + questionCode);
-            modal.classList.remove('hidden');
-        }
-
-        function closeModalQr(questionCode) {
-            var modal = document.getElementById('modal-' + questionCode);
-            modal.classList.add('hidden');
-        } */
-    /*
-        var editButtons = document.querySelectorAll('.edit-button');
-        editButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                var question = JSON.parse(this.getAttribute('data-question'));
-                console.log(question);
-                console.log(question);
-                openEditModal(question);
-            });
-        });
-
-
-        function openEditModal(question) {
-            document.getElementById('edit-title').value = question.title;
-            document.getElementById('edit-body').value = question.body;
-            document.getElementById('editForm').action = '{{ route("questions.update", ["question" => "__question_code__"]) }}'
-                .replace('__question_code__', question.code);
-            document.getElementById('editModal').classList.remove('hidden');
-        }
-
-
-        // Funkci
-        a na zatv
-        orenie mo
-        dálneho okna pre editáciu
-
-
-
-        function
-
-        closeEditModal() {
-            docum
-            ent.getElementById('editModal').classList.add('hidden');
-        }
-
-
-
-
-
-
-        // Funkcia na odoslanie formulára pre editáciu
-
-
-        function submitEditForm() {
-            document.getElementById('editForm').submit();
-        }
-
-
-        function setQuestionCode(event) {
-            event.preventDefault();
-            var questionCode = event.target.dataset.questionCode;
-            console.log(questionCode);
-            var form = document.getElementById('deleteForm');
-            form
-    .
-            querySelector('input[name="question_code"]').value = questionCode;
-            form.submit();
-        }
-
-
-        /*   document.addEventListener('DOMContentLoaded', function() {
-              const categorySelect = document.getElementById('category');
-              const inputOptions = document.getElementById('input-options');
-
-              categorySelect.addEventListener('change', function() {
-                  if (categorySelect.value === 'input') {
-                      inputOptions.style.display = 'block';
-                  } else {
-                      inputOptions.style.display = 'none';
-                  }
-              });
-
-              const addOptionButton = document.getElementById('add-option');
-              if (addOptionButton) {
-                  addOptionButton.addEventListener('click', function() {
-                      const inputOptions = document.getElementById('input-options');
-                      const inputField = document.createElement('input');
-                      inputField.type = 'text';
-                      inputField.name = 'input_options[]';
-                      inputField.classList.add('shadow', 'appearance-none', 'border', 'rounded', 'w-full', 'py-2',
-                          'px-3', 'text-gray-700', 'leading-tight', 'focus:outline-none',
-                          'focus:shadow-outline', 'dark:bg-gray-700', 'dark:text-white');
-                      inputField.placeholder = 'Enter option';
-                      inputOptions.appendChild(inputField);
-                  });
-              }
-          }); */
-</script> */
