@@ -26,4 +26,10 @@ class Question extends Model
             $model->code = Str::random(5); // Generate a random 5-character code
         });
     }
+
+    // Mutator to ensure the code attribute is always 5 characters long
+    public function setCodeAttribute($value)
+    {
+        $this->attributes['code'] = Str::limit($value, 5, '');
+    }
 }

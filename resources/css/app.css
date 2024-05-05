@@ -2,11 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-.kk{
+.kk {
     background-image: url('../images/backround.webp');
     background-color: rgba(0, 0, 0, 0.7);
     background-blend-mode: multiply;
     background-size: cover;
-    background-position: center;}
+    background-position: center;
+}
 
 
+.bg-badge {
+    background-image: url('../images/vote-badge-removebg-preview.png');
+
+
+    border-radius: 50%;
+    transition: transform 0.7s ease; 
+    background-size: cover;
+}
+
+.bg-badge:hover {
+    transform: scale(1.2); 
+}
