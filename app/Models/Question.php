@@ -32,4 +32,10 @@ class Question extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    // Mutator to ensure the code attribute is always 5 characters long
+    public function setCodeAttribute($value)
+    {
+        $this->attributes['code'] = Str::limit($value, 5, '');
+    }
 }
