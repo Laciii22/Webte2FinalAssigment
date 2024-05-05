@@ -23,12 +23,12 @@ Route::middleware('guest')->group(function () {
     Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
     Route::post('reset-password', [NewPasswordController::class, 'store'])->name('password.store');
 
-    Route::get('/{question}', [QuestionController::class, 'showByCode'])->where('question', '[A-Za-z0-9]{5}')->name("test");
 
     //Route::get('/{question}/result', [QuestionController::class, 'showResult'])->name('questions.question-result');
 
     Route::post('/submit-response', [QuestionController::class, 'submitResponse'])->name('submitResponse');
 });
+Route::get('/{question}', [QuestionController::class, 'showByCode'])->where('question', '[A-Za-z0-9]{5}')->name("test");
 
 Route::middleware('auth')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])->name('register');

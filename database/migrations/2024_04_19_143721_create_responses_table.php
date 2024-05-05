@@ -13,11 +13,10 @@ return new class extends Migration
     {
         Schema::create('responses', function (Blueprint $table) {
             $table->id();
-            $table->string('question_code'); 
-            $table->string('selected_value');
+            $table->string('question_code');
+            $table->string('value');
             $table->timestamps();
-            $table->integer('count')->default(0); 
-
+            $table->integer('count')->default(0);
             $table->foreign('question_code')->references('code')->on('questions')->onDelete('cascade');
         });
     }
