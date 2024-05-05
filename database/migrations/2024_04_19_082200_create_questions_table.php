@@ -14,10 +14,14 @@ return new class extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->string('code', 5)->primary();
             $table->string('title');
-            $table->text('body');
-            $table->unsignedBigInteger('user_id');
+            $table->string('lesson');
             $table->timestamps();
+            $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->enum('category', ['text', 'choice'])->default('text');
+            $table->boolean('active')->default(true); // Add the 'active' column with default value true
+            $table->timestamp('closed_at')->nullable(); // Add closed_at field
+
         });
 
         // Generate a random 5-character code for each existing question

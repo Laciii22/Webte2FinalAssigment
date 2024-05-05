@@ -24,7 +24,7 @@
             {{ $slot }}
         </main>
     </div>
-    @include('components.footer')
+            @include('components.footer')
 
 </body>
 

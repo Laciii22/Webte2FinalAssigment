@@ -16,15 +16,21 @@ class Question extends Model
 
     protected $primaryKey = 'code'; // Specify the name of the primary key field
 
-    protected $fillable = ['title', 'body', 'user_id', 'code', 'active', 'category'];
+    protected $fillable = ['title', 'user_id', 'code', 'active', 'category', 'closed_at', 'lesson',];
 
     protected static function boot()
     {
         parent::boot();
 
         static::creating(function ($model) {
-            $model->code = Str::random(5); // Generate a random 5-character code
+            if (!$model->code) {
+                $model->code = Str::random(5); // Generate a random 5-character code
+            }
         });
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 
     // Mutator to ensure the code attribute is always 5 characters long

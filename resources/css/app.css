@@ -10,16 +10,19 @@
     background-position: center;
 }
 
+body::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for webkit browsers */
+}
 
 .bg-badge {
     background-image: url('../images/vote-badge-removebg-preview.png');
 
 
     border-radius: 50%;
-    transition: transform 0.7s ease; 
+    transition: transform 0.7s ease;
     background-size: cover;
 }
 
 .bg-badge:hover {
-    transform: scale(1.2); 
+    transform: scale(1.2);
 }
