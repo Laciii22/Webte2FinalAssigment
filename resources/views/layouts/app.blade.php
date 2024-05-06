@@ -17,15 +17,15 @@
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gradient-to-br from-slate-600 to-slate-900">
+    <div class="min-h-screen bg-gradient-to-br from-slate-600 to-slate-900 pb-6">
         @include('layouts.navigation')
 
         <main>
             {{ $slot }}
         </main>
-        @include('components.footer')
-
     </div>
+    @include('components.footer')
+
 </body>
 
 </html>

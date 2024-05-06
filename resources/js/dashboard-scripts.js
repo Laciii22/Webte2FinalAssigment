@@ -1,3 +1,39 @@
+/*****************************FILTER SECTION************************************/
+const lessonSearch = document.getElementById("search-lesson");
+const dateFilter = document.getElementById("date");
+
+function applyFilters() {
+    var lessonSearchValue = lessonSearch.value.toLowerCase();
+    var filterDate = new Date(dateFilter.value);
+
+    var allQuestions = document.querySelectorAll(".question");
+    allQuestions.forEach((question) => {
+        var lessonInput = question.querySelector(".lesson-input");
+        var createdInput = question.querySelector(".created-input");
+
+        if (lessonInput) {
+            if (!lessonInput.value.toLowerCase().includes(lessonSearchValue)) {
+                question.classList.add("hidden");
+                return;
+            }
+        }
+
+        if (createdInput) {
+            var createdDate = new Date(createdInput.value);
+            if (createdDate <= filterDate) {
+                question.classList.add("hidden");
+                return;
+            }
+        }
+        question.classList.remove("hidden");
+    });
+}
+
+lessonSearch.addEventListener("input", applyFilters);
+dateFilter.addEventListener("input", applyFilters);
+
+
+
 /*****************************QR CODE SECTION************************************/
 const qrcodeContainerParent = document.getElementById("qrcode-content-parent")
 const qrcodeBtns = document.getElementsByClassName("qrcode-btn");
