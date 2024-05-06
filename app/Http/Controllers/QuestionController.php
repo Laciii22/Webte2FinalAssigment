@@ -30,7 +30,7 @@ class QuestionController extends Controller
             ]);
 
             $response = Response::where('question_code', $questionCode)
-                ->where('selected_value', $validatedData['text_input'])
+                ->where('value', $validatedData['text_input'])
                 ->first();
 
             if ($response) {
@@ -38,7 +38,7 @@ class QuestionController extends Controller
             } else {
                 Response::create([
                     'question_code' => $questionCode,
-                    'selected_value' => $validatedData['text_input'],
+                    'value' => $validatedData['text_input'],
                     'count' => 1
                 ]);
             }
