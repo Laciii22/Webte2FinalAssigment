@@ -68,6 +68,20 @@ categorySelect.addEventListener("change", () => {
     Array.from(answersInputs).forEach((input) => {
         input.remove();
     })
+    if (categorySelect.value == "choice"){
+        createModalContent.insertAdjacentHTML('beforeend', `
+        <div class="mb-2 flex items-center answer">
+            <input type="text" name="input_options[]" id="question" class="flex-grow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John Doe" />
+
+        </div>
+        `);
+        createModalContent.insertAdjacentHTML('beforeend', `
+        <div class="mb-2 flex items-center answer">
+            <input type="text" name="input_options[]" id="question" class="flex-grow bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John Doe" />
+
+        </div>
+        `);
+    }
 })
 
 addBtn.addEventListener("click", () => {

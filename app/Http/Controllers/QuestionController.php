@@ -12,6 +12,9 @@ class QuestionController extends Controller
     public function showByCode($code)
     {
         $question = Question::where('code', $code)->firstOrFail();
+        if (!$question->active){
+            return redirect()->route('questions.question-result', [$code])->with('message', 'Question is not active!!!');
+        }
         $responses = Response::where('question_code', $code)->get();
 
         return view('questions.question', compact('question', 'responses'));
@@ -20,7 +23,6 @@ class QuestionController extends Controller
 
     public function submitResponse(Request $request)
     {
-
         $questionCode = $request->input('question_code');
         $question = Question::where('code', $questionCode)->firstOrFail();
 
@@ -134,6 +136,7 @@ class QuestionController extends Controller
         }
 
         // Update question
+        $old_cat = $question->category;
         $question->update($validatedData);
 
         // Check if the category has changed from "text" to "choice" or vice versa
@@ -141,8 +144,9 @@ class QuestionController extends Controller
             $inputOptions = $request->input('input_options');
 
             // Remove existing responses if category changed from "text" to "choice"
-            if ($question->getOriginal('category') === "text") {
+            if ($old_cat === "text") {
                 Response::where('question_code', $question->code)->delete();
+                return redirect('/dashboard')->with('success', 'Question updated successfully');
             }
 
             $answersDb = Response::where('question_code', $question->code)->get();

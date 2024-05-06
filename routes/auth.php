@@ -26,7 +26,6 @@ Route::middleware('guest')->group(function () {
 
     //Route::get('/{question}/result', [QuestionController::class, 'showResult'])->name('questions.question-result');
 
-    Route::post('/submit-response', [QuestionController::class, 'submitResponse'])->name('submitResponse');
 });
 Route::get('/{question}', [QuestionController::class, 'showByCode'])->where('question', '[A-Za-z0-9]{5}')->name("test");
 
