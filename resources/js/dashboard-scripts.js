@@ -60,6 +60,9 @@ Array.from(qrcodeBtns).forEach((btn) => {
 const categorySelect = document.getElementById("category-select");
 const addBtn = document.getElementById("add-btn");
 const createModalContent = document.getElementById("create-modal-content");
+const createQuestionForm = document.getElementById("createQuestionForm");
+const createButton = document.getElementById("crt-btn");
+const errorMessage = document.getElementById("error-message");
 
 categorySelect.addEventListener("change", () => {
     addBtn.classList.toggle("hidden");
@@ -83,6 +86,51 @@ categorySelect.addEventListener("change", () => {
         `);
     }
 })
+
+createButton.addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent form submission by default
+
+    const category = document.getElementById("category-select").value;
+    const questionInput = document.getElementById("question");
+    const lessonInput = document.getElementById("lesson");
+    let valid = true;
+    let message = "";
+
+    if (questionInput.value.trim() === '') {
+        valid = false;
+        message += "Question field cannot be empty. ";
+    } 
+
+    if (lessonInput.value.trim() === '') {
+        valid = false;
+        message += "Lesson field cannot be empty. ";
+    }
+
+    if (category === 'choice') {
+        const answerInputs = Array.from(document.querySelectorAll('input[name="input_options[]"]'));
+        let allFilled = true;
+
+        answerInputs.forEach(input => {
+            if (input.value.trim() === '') {
+                allFilled = false; // Set to false if any input is empty
+            }
+        });
+
+        if (!allFilled) {
+            valid = false;
+            message += "Please fill in all answer fields. ";
+        }
+    }
+
+    if (!valid) {
+        errorMessage.textContent = message; // Set error message
+        errorMessage.classList.remove("hidden"); // Show the error message
+        return; // Stop the function if validations fail
+    }
+
+    errorMessage.classList.add("hidden"); // Hide the error message if all validations pass
+    createQuestionForm.submit(); // Submit the form if all validations pass
+});
 
 addBtn.addEventListener("click", () => {
     createModalContent.insertAdjacentHTML('beforeend', `
