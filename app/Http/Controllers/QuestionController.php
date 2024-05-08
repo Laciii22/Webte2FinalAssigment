@@ -187,7 +187,7 @@ class QuestionController extends Controller
 
             // Remove existing responses if category changed from "text" to "choice"
             if ($old_cat === "text") {
-                Response::where('question_code', $question->code)->delete();
+                Response::where('question_code', $question->code)->where('version', $question->version)->delete();
                 return redirect('/dashboard')->with('success', 'Question updated successfully');
             }
 
