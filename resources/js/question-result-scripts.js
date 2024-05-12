@@ -1,4 +1,4 @@
-/* GRAPHS */
+/* GRAPHS ITS NOT THERE ANYMORE */
 document.addEventListener('DOMContentLoaded', function () {
     // Select all canvas elements with an id that includes 'pie-chart'
     const canvases = document.querySelectorAll('canvas[id^="pie-chart"]');
