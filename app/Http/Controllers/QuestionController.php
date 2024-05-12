@@ -12,12 +12,12 @@ class QuestionController extends Controller
     public function showByCode($code)
     {
         $question = Question::where('code', $code)->firstOrFail();
-        if (!$question->active){
+        if (!$question->active) {
             return redirect()->route('questions.question-result', [$code])->with('message', 'Question is not active!!!');
         }
         $responses = Response::where('question_code', $question->code)
-                         ->where('version', $question->version)
-                         ->get(); // Get responses where question_code is in $questionCodes*/
+            ->where('version', $question->version)
+            ->get(); // Get responses where question_code is in $questionCodes*/
         return view('questions.question', compact('question', 'responses'));
     }
 
@@ -69,10 +69,10 @@ class QuestionController extends Controller
         // Fetch responses for the current and previous versions
         $currentResponses = $question->responses;
         $allResponses = Response::where('question_code', $questionCode)
-                                ->orderBy('version', 'desc')
-                                ->get()
-                                ->groupBy('version');
-    
+            ->orderBy('version', 'desc')
+            ->get()
+            ->groupBy('version');
+
         return view('questions.question-result', compact('question', 'currentResponses', 'allResponses'));
     }
 
@@ -136,16 +136,16 @@ class QuestionController extends Controller
             'user_id' => 'required|exists:users,id',
         ]);
 
-        if (!$question->active && $request->input('active')){
+        if (!$question->active && $request->input('active')) {
             $question->active = true;
-            $question->version = $question->version+1;
+            $question->version = $question->version + 1;
             $question->closed_at = null;
             $question->save();
 
             $previousResponses = Response::where('question_code', $question->code)
-                                     ->where('version', $question->version - 1)
-                                     ->get();
-            if ($question->category === "choice"){
+                ->where('version', $question->version - 1)
+                ->get();
+            if ($question->category === "choice") {
                 foreach ($previousResponses as $response) {
                     Response::create([
                         'question_code' => $question->code,

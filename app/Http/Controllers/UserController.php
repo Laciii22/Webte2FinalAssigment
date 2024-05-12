@@ -51,6 +51,25 @@ class UserController extends Controller
         $user->delete();
 
         // Presmerovanie na určenú cestu
-        return redirect()->route('dashboard-users')->with('success', 'Question deleted successfully');
+        return redirect()->route('dashboard-users')->with('success', 'User deleted successfully');
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:8',
+            'admin' => 'required|boolean',
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'is_admin' => $request->admin,
+        ]);
+
+        return redirect()->route('dashboard-users')->with('success', 'User created successfully');
     }
 }

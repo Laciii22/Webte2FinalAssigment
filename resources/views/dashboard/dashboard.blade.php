@@ -85,7 +85,8 @@
 
                     <div>
                         <label for="text" class="block text-sm font-medium text-gray-900 dark:text-white">Responses</label>
-                        @foreach($responses->where('question_code', $question->code)->where('version', $question->version) as $response)
+                        @foreach($responses->where('question_code', $question->code)->where('version',
+                        $question->version) as $response)
                         <div class="mb-2">
                             <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John Doe" value="{{$response->value}}" disabled />
                         </div>
