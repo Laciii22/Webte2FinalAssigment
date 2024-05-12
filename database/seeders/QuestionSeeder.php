@@ -16,96 +16,107 @@ class QuestionSeeder extends Seeder
     {
         $questions = [
             [
-                'title' => 'What is PHP?',
+                'title' => 'What is PHP?', //this one has also arcchived one
                 'user_id' => 2,
                 'active' => true,
-                'category' => 'choice', // Changed to 'WEBTE' as per your constraint
+                'category' => 'choice',
                 'closed_at' => null,
-                'lesson' => 'WEBTE', // Changed to 'MAT' as per your constraint
-                'code' => 'Agx5s'
+                'lesson' => 'WEBTE',
+                'code' => 'Agx5s',
+                'version' => 2,
             ],
             [
-                'title' => 'How to install Laravel?',
+                'title' => 'How to install Laravel?', //This one is active false
                 'user_id' => 3,
-                'active' => true,
-                'category' => 'choice', // Changed to 'WEBTE' as per your constraint
-                'closed_at' => null,
-                'lesson' => 'MAT', // Changed to 'MAT' as per your constraint
-                'code' => 'Bhy4t'
+                'active' => false,
+                'category' => 'choice',
+                'closed_at' => now()->addHour(),
+                'lesson' => 'MAT',
+                'code' => 'Bhy4t',
+                'version' => 1,
             ],
             [
                 'title' => 'What is the latest version of MySQL?',
                 'user_id' => 2,
                 'active' => true,
-                'category' => 'choice', // Changed to 'WEBTE' as per your constraint
+                'category' => 'choice',
                 'closed_at' => null,
-                'lesson' => 'WEBTE', // Changed to 'MAT' as per your constraint
-                'code' => 'Cfd3r'
+                'lesson' => 'WEBTE',
+                'code' => 'Cfd3r',
+                'version' => 1,
             ],
             [
                 'title' => 'How to use Eloquent ORM?',
                 'user_id' => 3,
                 'active' => true,
-                'category' => 'text', // Changed to 'WEBTE' as per your constraint
+                'category' => 'text',
                 'closed_at' => null,
-                'lesson' => 'MAT', // Changed to 'MAT' as per your constraint
-                'code' => 'Dge2q'
+                'lesson' => 'MAT',
+                'code' => 'Dge2q',
+                'version' => 1,
             ],
             [
                 'title' => 'What is Blade templating engine?',
                 'user_id' => 2,
                 'active' => true,
-                'category' => 'text', // Changed to 'WEBTE' as per your constraint
+                'category' => 'text',
                 'closed_at' => null,
-                'lesson' => 'MAT', // Changed to 'MAT' as per your constraint
-                'code' => 'Ehf1p'
+                'lesson' => 'MAT',
+                'code' => 'Ehf1p',
+                'version' => 1,
             ],
             [
                 'title' => 'What is RESTful API?',
                 'user_id' => 3,
                 'active' => true,
-                'category' => 'text', // Changed to 'WEBTE' as per your constraint
+                'category' => 'text',
                 'closed_at' => null,
-                'lesson' => 'MAT', // Changed to 'MAT' as per your constraint
-                'code' => 'Fcg0o'
+                'lesson' => 'MAT',
+                'code' => 'Fcg0o',
+                'version' => 1,
             ],
             [
                 'title' => 'What is Object-Oriented Programming (OOP)?',
                 'user_id' => 2,
                 'active' => true,
-                'category' => 'text', // Changed to 'WEBTE' as per your constraint
+                'category' => 'text',
                 'closed_at' => null,
-                'lesson' => 'MAT', // Changed to 'MAT' as per your constraint
-                'code' => 'Gbf9n'
+                'lesson' => 'MAT',
+                'code' => 'Gbf9n',
+                'version' => 1,
             ],
             [
                 'title' => 'What are Agile Software Development methodologies?',
                 'user_id' => 3,
                 'active' => true,
-                'category' => 'text', // Changed to 'WEBTE' as per your constraint
+                'category' => 'text',
                 'closed_at' => null,
-                'lesson' => 'WEBTE', // Changed to 'MAT' as per your constraint
-                'code' => 'Hae8m'
+                'lesson' => 'WEBTE',
+                'code' => 'Hae8m',
+                'version' => 1,
             ],
             [
                 'title' => 'How to implement authentication in Laravel?',
                 'user_id' => 2,
                 'active' => true,
-                'category' => 'text', // Changed to 'WEBTE' as per your constraint
+                'category' => 'text',
                 'closed_at' => null,
-                'lesson' => 'WEBTE', // Changed to 'MAT' as per your constraint
-                'code' => 'Iad7l'
+                'lesson' => 'WEBTE',
+                'code' => 'Iad7l',
+                'version' => 1,
             ],
             [
                 'title' => 'What is the difference between GET and POST requests?',
                 'user_id' => 3,
                 'active' => true,
-                'category' => 'text', // Changed to 'WEBTE' as per your constraint
+                'category' => 'text',
                 'closed_at' => null,
-                'lesson' => 'WEBTE', // Changed to 'MAT' as per your constraint
-                'code' => 'Jbc6k'
+                'lesson' => 'WEBTE',
+                'code' => 'Jbc6k',
+                'version' => 1,
             ],
         ];
+
 
         foreach ($questions as $question) {
             Question::create($question);

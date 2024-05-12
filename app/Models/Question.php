@@ -16,7 +16,7 @@ class Question extends Model
 
     protected $primaryKey = 'code'; // Specify the name of the primary key field
 
-    protected $fillable = ['title', 'user_id', 'code', 'active', 'category', 'closed_at', 'lesson',];
+    protected $fillable = ['title', 'user_id', 'code', 'active', 'category', 'closed_at', 'lesson', 'version'];
 
     protected static function boot()
     {
@@ -37,5 +37,10 @@ class Question extends Model
     public function setCodeAttribute($value)
     {
         $this->attributes['code'] = Str::limit($value, 5, '');
+    }
+
+    public function responses()
+    {
+        return $this->hasMany(Response::class, 'question_code', 'code');
     }
 }

@@ -85,7 +85,8 @@
 
 
                     <div>
-                        @foreach($responses->where('question_code', $question->code) as $response)
+                        <label for="text" class="block text-sm font-medium text-gray-900 dark:text-white">Responses</label>
+                        @foreach($responses->where('question_code', $question->code)->where('version', $question->version) as $response)
                         <div class="mb-2">
                             <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John Doe" value="{{$response->value}}" disabled />
                         </div>
@@ -142,9 +143,7 @@
                 <div class="text-gray-900 dark:text-gray-100 sm:flex gap-1 flex justify-end">
                     <button x-data @click="$dispatch('open-modal', 'qrcode-modal')" class="bg-gray-900 hover:bg-black text-white font-bold py-2 px-4 rounded qrcode-btn" data-code="{{$question->code}}">Show QR
                         code</button>
-                    @if ($question->active)
                     <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded edit-btn" data-question="{{ json_encode($question) }}" data-answers="{{ json_encode($responses->where('question_code', $question->code)->toArray()) }}" x-data @click="$dispatch('open-modal', 'edit-question-modal')">Edit</button>
-                    @endif
                     <form id="deleteForm" class="m-0" action="{{ route('questions.destroy', ['question_code' => $question->code]) }}" method="POST">
                         @csrf
                         @method('DELETE')

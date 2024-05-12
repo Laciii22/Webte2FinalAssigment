@@ -4,7 +4,7 @@
     <div class="modal-content ">
         <h4 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight p-3">Create Question
         </h4>
-        <form method="POST" action="{{ route('questions.store') }}">
+        <form method="POST" id="createQuestionForm" action="{{ route('questions.store') }}">
             @csrf
             @method('POST')
             <div class="px-4 py-5 sm:px-6" id="create-modal-content">
@@ -32,6 +32,7 @@
                     </select>
                 </div>
 
+
                 @if(Auth::user()->isAdmin())
                 <div class="mb-6">
                     <label for="user_id" class="block text-sm font-medium text-gray-900 dark:text-white">Select
@@ -49,17 +50,15 @@
                     <input value="{{Auth::id()}}" disabled type="user_id" id="user_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John Doe" />
                 </div>
                 @endif
+                <div id="error-message" class="text-red-500 text-sm hidden p-2"></div>
             </div>
             <div class="px-4 py-4 sm:px-6 flex flex-row justify-between">
                 <div>
-
-                    
-
                     <button type="button" id="add-btn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1 hidden">Add
                         answer</button>
                 </div>
                 <div>
-                    <button type="submit" onclick="" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1">Create
+                    <button type="submit" id="crt-btn" onclick="" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1">Create
                         question</button>
                     <button type="button" @click="$dispatch('close-modal', 'create-question-modal')" class="mt-3 w-full sm:mt-0 sm:w-auto bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Cancel</button>
                 </div>

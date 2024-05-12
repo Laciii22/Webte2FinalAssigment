@@ -9,5 +9,5 @@ class Response extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['question_code', 'value', 'count']; // Update fillable fields
+    protected $fillable = ['question_code', 'value', 'count', 'version']; // Update fillable fields
 }

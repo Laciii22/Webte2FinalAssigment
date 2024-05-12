@@ -19,8 +19,11 @@ class DashboardController extends Controller
         $users = User::where('is_admin', false)->get();
 
         $questionCodes = $questions->pluck('code'); // Get all question codes
-        $responses = Response::whereIn('question_code', $questionCodes)->get(); // Get responses where question_code is in $questionCodes
-
+        $questionVersion = $questions->pluck('version');
+        $responses = Response::whereIn('question_code', $questionCodes)
+                        ->whereIn('version', $questionVersion)
+                        ->get(); // Get responses where question_code is in $questionCodes*/
+        //$responses = Response::whereIn('question_code', $questionCodes)->get();
         return view('dashboard.dashboard', compact('questions', 'users', 'responses'));
     }
 }

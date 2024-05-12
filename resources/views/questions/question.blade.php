@@ -12,7 +12,7 @@
                         Title: {{ $question->title }}
                     </div>
                     <div class="p-6 text-gray-900 dark:text-gray-100">
-                        Body: {{ $question->body }}
+                        Lesson: {{ $question->lesson }}
                     </div>
                     <div class="p-6 text-gray-900 dark:text-gray-100">
                         Active: {{ $question->active }}

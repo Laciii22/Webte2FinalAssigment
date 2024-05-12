@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Question;
+use App\Models\ArchivedQuestion;
 use App\Models\Response;
 
 class QuestionController extends Controller
@@ -11,15 +12,18 @@ class QuestionController extends Controller
     public function showByCode($code)
     {
         $question = Question::where('code', $code)->firstOrFail();
-        $responses = Response::where('question_code', $code)->get();
-
+        if (!$question->active){
+            return redirect()->route('questions.question-result', [$code])->with('message', 'Question is not active!!!');
+        }
+        $responses = Response::where('question_code', $question->code)
+                         ->where('version', $question->version)
+                         ->get(); // Get responses where question_code is in $questionCodes*/
         return view('questions.question', compact('question', 'responses'));
     }
 
 
     public function submitResponse(Request $request)
     {
-
         $questionCode = $request->input('question_code');
         $question = Question::where('code', $questionCode)->firstOrFail();
 
@@ -38,6 +42,7 @@ class QuestionController extends Controller
                 Response::create([
                     'question_code' => $questionCode,
                     'value' => $validatedData['text_input'],
+                    'version' => $question->version,
                     'count' => 1
                 ]);
             }
@@ -59,22 +64,27 @@ class QuestionController extends Controller
 
     public function showResult($questionCode)
     {
-        $question = Question::where('code', $questionCode)->firstOrFail();
+        $question = Question::with('responses')->where('code', $questionCode)->firstOrFail();
 
-        // Fetch all responses for the question code
-        $responses = Response::where('question_code', $questionCode)->get();
-
-        // Pass the question and responses to the view
-        return view('questions.question-result', compact('question', 'responses'));
+        // Fetch responses for the current and previous versions
+        $currentResponses = $question->responses;
+        $allResponses = Response::where('question_code', $questionCode)
+                                ->orderBy('version', 'desc')
+                                ->get()
+                                ->groupBy('version');
+    
+        return view('questions.question-result', compact('question', 'currentResponses', 'allResponses'));
     }
 
     public function destroy($question_code)
     {
         // Nájdenie otázky podľa kódu
         $question = Question::where('code', $question_code)->firstOrFail();
+        $question_arch = ArchivedQuestion::where('code', $question_code)->get();
 
         // Odstránenie otázky
         $question->delete();
+        $question_arch->each->delete();
 
         // Presmerovanie na určenú cestu
         return redirect()->route('dashboard')->with('success', 'Question deleted successfully');
@@ -96,6 +106,7 @@ class QuestionController extends Controller
             'active' => $request->active,
             'user_id' => $request->user_id,
             'category' => $request->category,
+            'version' => 1,
         ]);
 
         // Create responses for input questions
@@ -105,6 +116,7 @@ class QuestionController extends Controller
                 Response::create([
                     'question_code' => $question->code, // Assuming 'code' is the question code
                     'value' => $option,
+                    'version' => $question->version,
                     // Add other necessary fields here
                 ]);
             }
@@ -124,15 +136,48 @@ class QuestionController extends Controller
             'user_id' => 'required|exists:users,id',
         ]);
 
+        if (!$question->active && $request->input('active')){
+            $question->active = true;
+            $question->version = $question->version+1;
+            $question->closed_at = null;
+            $question->save();
+
+            $previousResponses = Response::where('question_code', $question->code)
+                                     ->where('version', $question->version - 1)
+                                     ->get();
+            if ($question->category === "choice"){
+                foreach ($previousResponses as $response) {
+                    Response::create([
+                        'question_code' => $question->code,
+                        'value' => $response->value,
+                        'version' => $question->version,
+                        'count' => 0  // Reset count to zero for new version
+                    ]);
+                }
+            }
+            return redirect('/dashboard')->with('success', 'Question updated successfully');
+        }
         // Check if 'active' is set to false
-        if (!$request->input('active')) {
+        if ($question->active && !$request->input('active')) {
             $question->active = false; // Set 'active' to false
             $question->closed_at = now(); // Set 'closed_at' to the current timestamp
             $question->save();
+            ArchivedQuestion::create([
+                'code' => $question->code,
+                'title' => $question->title,
+                'lesson' => $question->lesson,
+                'category' => $question->category,
+                'user_id' => $question->user_id,
+                'version' => $question->version,  // Ensure version is tracked and incremented as necessary elsewhere
+                'closed_at' => $question->closed_at,
+                'created_at' => $question->created_at,
+                'updated_at' => $question->updated_at
+            ]);
             return redirect('/dashboard')->with('success', 'Question updated successfully');
         }
 
         // Update question
+        $old_cat = $question->category;
         $question->update($validatedData);
 
         // Check if the category has changed from "text" to "choice" or vice versa
@@ -140,8 +185,9 @@ class QuestionController extends Controller
             $inputOptions = $request->input('input_options');
 
             // Remove existing responses if category changed from "text" to "choice"
-            if ($question->getOriginal('category') === "text") {
-                Response::where('question_code', $question->code)->delete();
+            if ($old_cat === "text") {
+                Response::where('question_code', $question->code)->where('version', $question->version)->delete();
+                return redirect('/dashboard')->with('success', 'Question updated successfully');
             }
 
             $answersDb = Response::where('question_code', $question->code)->get();
@@ -157,14 +203,20 @@ class QuestionController extends Controller
                     continue;
                 }
 
-
+                // If the option doesn't exist, create a new response
+                Response::create([
+                    'question_code' => $question->code,
+                    'value' => $option,
+                    'version' => $question->version,
+                    // Add other necessary fields here
+                ]);
             }
 
             // Now, remove responses from the database that are not present in the input options
-            $answersDb->whereNotIn('value', $inputOptions)->each->delete();
+            $answersDb->whereNotIn('value', $inputOptions)->whereIn('version', $question->version)->each->delete();
         } elseif ($question->getOriginal('category') !== "text") {
             // Remove existing responses if category changed from "choice" to "text"
-            Response::where('question_code', $question->code)->delete();
+            Response::where('question_code', $question->code)->where('version', $question->version)->delete();
         }
         // Redirect back with success message or to a specific route
         return redirect('/dashboard')->with('success', 'Question updated successfully');
