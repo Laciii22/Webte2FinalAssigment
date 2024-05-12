@@ -53,6 +53,8 @@
             <div class="px-4 py-4 sm:px-6 flex flex-row justify-between">
                 <div>
 
+                    
+
                     <button type="button" id="add-btn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1 hidden">Add
                         answer</button>
                 </div>

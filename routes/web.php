@@ -30,6 +30,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/{question}/result', [QuestionController::class, 'showResult'])->name('questions.question-result');
+Route::post('/submit-response', [QuestionController::class, 'submitResponse'])->name('submitResponse');
+
 //Route::get('/questions/{question_code}', [QuestionController::class, 'showByCode'])->name('questions.show');
 //Route::post('/questions/{question_code}', [QuestionController::class, 'submitResponse'])->name('submitResponse');
 

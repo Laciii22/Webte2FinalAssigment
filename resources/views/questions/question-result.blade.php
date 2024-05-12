@@ -26,7 +26,7 @@
                 @if($question->category != 'text')
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg md:w-1/2">
                     <div class="p-6 text-white flex justify-center">
-                        <canvas id="pie-chart" style="max-width: 300px; max-height: 300px;" data-labels="{!! htmlspecialchars(json_encode($responses->pluck('selected_value')), ENT_QUOTES, 'UTF-8') !!}" data-data="{!! htmlspecialchars(json_encode($responses->pluck('count')), ENT_QUOTES, 'UTF-8') !!}">
+                        <canvas id="pie-chart" style="max-width: 300px; max-height: 300px;" data-labels="{!! htmlspecialchars(json_encode($responses->pluck('value')), ENT_QUOTES, 'UTF-8') !!}" data-data="{!! htmlspecialchars(json_encode($responses->pluck('count')), ENT_QUOTES, 'UTF-8') !!}">
                         </canvas>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                     <div class="p-6 text-gray-900 dark:text-gray-100">
                         <h2 class="text-xl font-bold">Responses:</h2>
                         @foreach($responses as $response)
-                        <div>{{ $response->selected_value }}</div>
+                        <div>{{ $response->value }}</div>
                         @endforeach
                     </div>
                 </div>
