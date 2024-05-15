@@ -49,6 +49,11 @@
         <div>
             <button onclick="submitVotingCode()" class="w-full bg-white text-teal-500 hover:bg-teal-500 hover:text-white px-4 py-2 rounded-md shadow-md transition">Submit</button>
         </div>
+        <br>
+
+        <div class="mt-4">
+            <button onclick="openUserManual()" class="w-full bg-white text-teal-500 hover:bg-teal-500 hover:text-white px-4 py-2 rounded-md shadow-md transition">User Manual</button>
+        </div>
     </div>
 
     <script>
@@ -64,6 +69,12 @@
         url = url.replace(':votingCode', encodeURIComponent(votingCode));
         window.location.href = url;
     }
+
+
+    function openUserManual() {
+        window.location.href = "{{ route('user-manual') }}";
+    }
+     
 </script>
 
 </body>
