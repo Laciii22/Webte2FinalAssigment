@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Question;
 use App\Models\ArchivedQuestion;
 use App\Models\Response;
+use Illuminate\Support\Facades\Auth;
 
 class QuestionController extends Controller
 {
@@ -220,5 +221,45 @@ class QuestionController extends Controller
         }
         // Redirect back with success message or to a specific route
         return redirect('/dashboard')->with('success', 'Question updated successfully');
+    }
+
+
+    public function export($format)
+    {
+        if ($format == 'json') {
+            if (Auth::user()->isAdmin()) { 
+                $questions = Question::with('responses')->get();
+            } else {
+                $questions = Question::with('responses')->where('user_id', Auth::id())->get();
+            }
+
+            $questionsWithResponses = $questions->map(function ($question) {
+                $responsesGroupedByVersion = $question->responses->groupBy('version')->map(function ($responses, $version) {
+                    return [
+                        'version' => $version,
+                        'responses' => $responses->map(function ($response) {
+                            return [
+                                'value' => $response->value,
+                                'count' => $response->count, 
+                            ];
+                        }),
+                    ];
+                })->values();
+
+                return [
+                    'code' => $question->code,
+                    'title' => $question->title,
+                    'lesson' => $question->lesson,
+                    'created_at' => $question->created_at ->format('Y-m-d H:i'),
+                    'closed_at' => $question->closed_at , 
+                    'active' => $question->active,
+                    'responses' => $responsesGroupedByVersion,
+                ];
+            });
+
+            return response()->json($questionsWithResponses);
+        }
+
+        return response()->json(['error' => 'Invalid format'], 400);
     }
 }

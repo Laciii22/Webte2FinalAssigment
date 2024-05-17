@@ -25,7 +25,11 @@
                         <input type="date" id="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John Doe" />
                     </div>
                 </div>
+                <div class="p-6 text-gray-900 dark:text-gray-100 flex items-end justify-start space-x-4">
+                    <button onclick="exportQuestionsToJson()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Export Questions to JSON</button>
+                </div>
 
+                
             </div>
         </div>
     </div>
@@ -156,3 +160,11 @@
     </div>
     @endforeach
 </x-app-layout>
+
+<script>
+   function exportQuestionsToJson() {
+        const url = `{{ route('questions.export', ['format' => 'json']) }}`;
+        window.open(url, '_blank');
+    }
+
+</script>
