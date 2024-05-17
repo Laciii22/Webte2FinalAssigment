@@ -51,6 +51,7 @@
                 </ul>
             
             
+            
             <strong><p class="text-xl font-semibold text-white my-2">Displaying Voting Results:</p></strong>
                 <p>After submitting the voting question by clicking on submit button, the user will be redirected to a page displaying the results of the voting for the given question. From there, they can return to the home page of the application by clicking to "Welcome" tab.</p>
                 <strong> <p class="text-xl font-semibold text-white my-2">Formats for Displaying Voting Results:</p> </strong>

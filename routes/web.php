@@ -24,6 +24,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/questions', [QuestionController::class, 'store'])->name('questions.store');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    Route::get('/questions/export/{format}', [QuestionController::class, 'export'])->name('questions.export');
+
     Route::get('/dashboard-users', [UserController::class, 'index'])->name('dashboard-users');
 
 
