@@ -14,25 +14,27 @@
     <div class="pt-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100 flex items-end justify-start space-x-4">
-                    <button x-data class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="$dispatch('open-modal', 'create-question-modal')">Create New Question</button>
-                    <div>
+                <div class="p-6 text-gray-900 dark:text-gray-100 grid grid-cols-4 gap-4 md:grid-cols-2 sm:grid-cols-1">
+                    <div class="col-span-4 md:col-span-1">
                         <label for="search-lesson" class="block text-sm font-medium text-gray-900 dark:text-white">Lesson search</label>
                         <input type="text" id="search-lesson" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="ex.WEBTE" />
                     </div>
-                    <div>
+                    <div class="col-span-4 md:col-span-1">
                         <label for="date" class="block text-sm font-medium text-gray-900 dark:text-white">Date</label>
                         <input type="date" id="date" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John Doe" />
                     </div>
+                    <div class="col-span-4 md:col-span-1">
+                        <button x-data class="bg-blue-500 hover:bg-blue-700 w-full text-white font-bold py-2 px-4 rounded" @click="$dispatch('open-modal', 'create-question-modal')">Create New Question</button>
+                    </div>
+                    <div class="col-span-4 md:col-span-1">
+                        <button onclick="exportQuestionsToJson()" class="bg-blue-500 hover:bg-blue-700 w-full text-white font-bold py-2 px-4 rounded">Export Questions to JSON</button>
+                    </div>
                 </div>
-                <div class="p-6 text-gray-900 dark:text-gray-100 flex items-end justify-start space-x-4">
-                    <button onclick="exportQuestionsToJson()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Export Questions to JSON</button>
-                </div>
-
-                
             </div>
         </div>
     </div>
+
+
 
 
     @foreach($questions as $index => $question)
@@ -162,9 +164,8 @@
 </x-app-layout>
 
 <script>
-   function exportQuestionsToJson() {
+    function exportQuestionsToJson() {
         const url = `{{ route('questions.export', ['format' => 'json']) }}`;
         window.open(url, '_blank');
     }
-
 </script>
