@@ -29,6 +29,20 @@
                     <div class="col-span-4 md:col-span-1">
                         <button onclick="exportQuestionsToJson()" class="bg-blue-500 hover:bg-blue-700 w-full text-white font-bold py-2 px-4 rounded">Export Questions to JSON</button>
                     </div>
+
+                    @if(Auth::user()->isAdmin())
+                        <div class="col-span-4 md:col-span-1">
+                            <form id="filter-form" method="GET" action="{{ route('dashboard') }}">
+                                <label for="user-filter" class="block text-sm font-medium text-gray-900 dark:text-white">Filter by User</label>
+                                <select id="user-filter" name="user_id" onchange="document.getElementById('filter-form').submit();" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    <option value="">All Users</option>
+                                    @foreach($users as $user)
+                                        <option value="{{ $user->id }}" {{ $selectedUserId == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
+                                    @endforeach
+                                </select>
+                            </form>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
