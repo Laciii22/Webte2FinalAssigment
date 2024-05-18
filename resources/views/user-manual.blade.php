@@ -47,7 +47,7 @@
                 <ul class="list-disc list-inside pl-4">
                     <li>Scanning the published QR code.</li>
                     <li>Entering the access code on the home page of the application.</li>
-                    <li>Entering the URL in the format <code>https://node48.webte.fei.stuba.sk/abcde</code> in the browser, where <code>abcde</code> represents a 5-character access code </li>
+                    <li>Entering the URL in the format <code>https://node69.webte.fei.stuba.sk/abcde</code> in the browser, where <code>abcde</code> represents a 5-character access code </li>
                 </ul>
             
             
@@ -64,7 +64,7 @@
         
         <div class="list-decimal list-inside text-gray-200 mb-2">
             
-        <strong> <p class="text-xl font-semibold text-white my-2">Login:</p> </strong>
+            <strong> <p class="text-xl font-semibold text-white my-2">Login:</p> </strong>
                 <p>Login to the application using their registration.</p>
            
                 <strong> <p class="text-xl font-semibold text-white my-2">Edit profile:</p> </strong>
@@ -100,14 +100,14 @@
                 <p>The user can close a question by clicking the edit button and setting "Active" to "No".</p>
             
                 <strong> <p class="text-xl font-semibold text-white my-2">Export Questions and Answers:</p> </strong>
-                <p>User can export questions and answers to an external file (csv, json, xml).</p>
+                <p>User can export questions and answers to a JSON file using the "Export Questions to JSON" button, which is located on the dashboard page above the questions.</p>
             
-                    </div>
+        </div>
 
-        <h3 class="text-white mb-4 bg-teal-500 p-2 rounded font-bold text-center">ADMINISTRATOR:</h3>
+    <h3 class="text-white mb-4 bg-teal-500 p-2 rounded font-bold text-center">ADMINISTRATOR:</h3>
 
-        <p class="text-gray-200 mt-4">An Administrator has the same functionalities as a logged-in user.</p>
-        <p class="text-gray-200 ">Plus:</p>
+    <p class="text-gray-200 mt-4">An Administrator has the same functionalities as a logged-in user.</p>
+    <p class="text-gray-200 ">Plus:</p>
 
 <div class="list-decimal list-inside text-gray-200 mb-2">
     
