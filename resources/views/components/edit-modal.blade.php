@@ -2,7 +2,7 @@
     <div class=" modal-content">
         <h4 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight p-3">Edit Question
         </h4>
-        <form id="edit-form" method="POST" action='{{ route("questions.update", ["question" => "__question_code__"]) }}'>
+        <form id="edit-form" method="POST">
             @csrf
             @method('PUT')
             <div class="px-4 py-5 sm:px-6" id="edit-modal-content">

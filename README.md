@@ -47,6 +47,7 @@ extension=pdo_odbc
 extension=pdo_pgsql
 extension=pdo_sqlite
 extension=pgsql
+extension=zip
 ```
 
 ### 4. Update/Install Composer dependencies
@@ -61,11 +62,49 @@ composer install
 composer update
 ```
 
+## Users with credentials
+
+| name       | email             | password | admin |
+|------------|-------------------|----------|-------|
+| John Doe   | john@example.com  | password | false |
+| Jane Doe   | jane@example.com  | password | false |
+| Admin User | admin@example.com | password | true  |
+
 ## Run project
 
-### 1. Run docker-composer file
+### Run application with docker-compose
+
+#### 1. Uncomment the service in docker-compose for Laravel application
+
+#### 2. Run install command for frontend and build the frontend
+
+
+```sh
+npm run install
+npm run build
+```
+
+#### 3. Run migrations + seeders with running container with MySQL
+
+```sh
+php artisan migrate
+php artisan db:seed
+
+```
+
+#### 4. Run the docker-compose file
 
 Navigate to the root directory and run docker compose file to start MYSQL database
+
+```sh
+docker compose up -d
+```
+
+### Run application locally with database in Docker container
+
+#### 1. Comment (if not commented) the service for laravel application in docker-compose
+
+#### 2. Run the docker-compose to start the MySQL database
 
 ```sh
 docker compose up -d
@@ -79,14 +118,20 @@ Idk if this is needed but i have to done it before running the application
 php artisan key:generate
 ```
 
-### 3. Run migrations and install npm packages
+### 3. Run migrations and seeders
 
 ```sh
 php artisan migrate
-npm install
+php artisan db:seed
 ```
 
-### 4. Run Laravel application
+### 4. Build and run the frontend
+
+```sh
+npm run install
+```
+
+### 5. Run Laravel application
 
 ```sh
 php artisan serve

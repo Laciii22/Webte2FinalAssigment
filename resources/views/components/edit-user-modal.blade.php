@@ -4,7 +4,7 @@
     <div class="modal-content ">
         <h4 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight p-3">Update User
         </h4>
-        <form method="POST" id="edit-user-form" action='{{ route("user.update", "__user_id__") }}'>
+        <form method="POST" id="edit-user-form">
             @csrf
             @method('PUT')
             <div class="px-4 py-5 sm:px-6" id="edit-modal-content">
@@ -33,7 +33,7 @@
             </div>
             <div class="px-4 py-4 sm:px-6 flex flex-row justify-between">
                 <div>
-                    <button id="edit-btn" type="submit" id="edit-btn" onclick="" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1">Update
+                    <button id="edit-btn" type="submit" onclick="" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mx-1">Update
                         User</button>
                     <button type="button" @click="$dispatch('close-modal', 'edit-user-modal')" class="mt-3 w-full sm:mt-0 sm:w-auto bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Cancel</button>
                 </div>

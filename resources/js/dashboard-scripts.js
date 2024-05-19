@@ -99,7 +99,7 @@ createButton.addEventListener('click', function(event) {
     if (questionInput.value.trim() === '') {
         valid = false;
         message += "Question field cannot be empty. ";
-    } 
+    }
 
     if (lessonInput.value.trim() === '') {
         valid = false;
@@ -199,8 +199,9 @@ Array.from(editButtons).forEach((button) => {
     button.addEventListener("click", () => {
         var data = JSON.parse(button.getAttribute("data-question"));
         var parsedData = JSON.parse(button.getAttribute("data-answers"))
-        document.getElementById('edit-form').action =  document.getElementById('edit-form').action.replace("__question_code__", data.code);
-
+        //document.getElementById('edit-form').action =  document.getElementById('edit-form').action.replace("__question_code__", data.code);
+        document.getElementById('edit-form').action = `/${data.code}`;
+        //console.log(document.getElementById('edit-form').action)
         if (typeof parsedData === 'object' && !Array.isArray(parsedData)) {
             var dataArray = [];
             for (var key in parsedData) {

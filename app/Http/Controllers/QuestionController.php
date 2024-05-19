@@ -227,7 +227,7 @@ class QuestionController extends Controller
     public function export($format)
     {
         if ($format == 'json') {
-            if (Auth::user()->isAdmin()) { 
+            if (Auth::user()->isAdmin()) {
                 $questions = Question::with('responses')->get();
             } else {
                 $questions = Question::with('responses')->where('user_id', Auth::id())->get();
@@ -240,7 +240,7 @@ class QuestionController extends Controller
                         'responses' => $responses->map(function ($response) {
                             return [
                                 'value' => $response->value,
-                                'count' => $response->count, 
+                                'count' => $response->count,
                             ];
                         }),
                     ];
@@ -250,8 +250,8 @@ class QuestionController extends Controller
                     'code' => $question->code,
                     'title' => $question->title,
                     'lesson' => $question->lesson,
-                    'created_at' => $question->created_at ->format('Y-m-d H:i'),
-                    'closed_at' => $question->closed_at , 
+                    'created_at' => $question->created_at->format('Y-m-d H:i'),
+                    'closed_at' => $question->closed_at,
                     'active' => $question->active,
                     'responses' => $responsesGroupedByVersion,
                 ];

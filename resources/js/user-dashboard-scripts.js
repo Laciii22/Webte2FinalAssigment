@@ -53,9 +53,12 @@ const editButtons = document.getElementsByClassName("edit-btn");
 Array.from(editButtons).forEach((button) => {
     button.addEventListener("click", () => {
         var data = JSON.parse(button.getAttribute("data-user"));
-        console.log(data);
-        document.getElementById('edit-user-form').action =  document.getElementById('edit-user-form').action.replace("__user_id__", data.id);
+        //console.log(data);
+        //console.log(updateRoute)
+        //document.getElementById('edit-user-form').action =  document.getElementById('edit-user-form').action.replace("__user_id__", data.id);
+        document.getElementById('edit-user-form').action = `users/${data.id}`;
 
+        //console.log(document.getElementById("edit-user-form").action);
         emailInputEdit.value = data.email;
         nameInputEdit.value = data.name
 
@@ -98,5 +101,5 @@ editButton.addEventListener('click', function(event) {
     }
 
     errorMessageEdit.classList.add("hidden");
-    createUserForm.submit();
+    editUserForm.submit();
 });

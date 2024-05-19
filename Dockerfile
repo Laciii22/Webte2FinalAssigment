@@ -23,11 +23,6 @@ COPY . /app
 # Install PHP dependencies using Composer
 RUN composer install
 
-# Install JavaScript dependencies using npm
-RUN npm install
-
-#RUN npm run build
-
 # Expose port 8000
 EXPOSE 8000
 
