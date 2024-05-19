@@ -201,6 +201,7 @@ Array.from(editButtons).forEach((button) => {
         var parsedData = JSON.parse(button.getAttribute("data-answers"))
         //document.getElementById('edit-form').action =  document.getElementById('edit-form').action.replace("__question_code__", data.code);
         document.getElementById('edit-form').action = `/${data.code}`;
+        console.log(document.getElementById('edit-form').action);
         //console.log(document.getElementById('edit-form').action)
         if (typeof parsedData === 'object' && !Array.isArray(parsedData)) {
             var dataArray = [];

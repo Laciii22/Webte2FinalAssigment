@@ -58,7 +58,7 @@ Array.from(editButtons).forEach((button) => {
         //document.getElementById('edit-user-form').action =  document.getElementById('edit-user-form').action.replace("__user_id__", data.id);
         document.getElementById('edit-user-form').action = `users/${data.id}`;
 
-        //console.log(document.getElementById("edit-user-form").action);
+        console.log(document.getElementById("edit-user-form").action);
         emailInputEdit.value = data.email;
         nameInputEdit.value = data.name
 
