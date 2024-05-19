@@ -9,20 +9,20 @@
             @method('PUT')
             <div class="px-4 py-5 sm:px-6" id="edit-modal-content">
                 <div class="mb-2">
-                    <label for="email" class="block text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                    <label for="email-edit" class="block text-sm font-medium text-gray-900 dark:text-white">Email</label>
                     <input name="email" type="email" id="email-edit" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John Doe" />
                 </div>
                 <div class="mb-2">
-                    <label for="name" class="block text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                    <label for="name-edit" class="block text-sm font-medium text-gray-900 dark:text-white">Name</label>
                     <input name="name" type="text" id="name-edit" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="John Doe" />
                 </div>
                 <div class="mb-2">
-                    <label for="password" class="block text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                    <label for="password-edit" class="block text-sm font-medium text-gray-900 dark:text-white">Password</label>
                     <input name="password" type="password" id="password-edit" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="************" />
                 </div>
 
                 <div class="mb-2">
-                    <label for="admin" class="block text-sm font-medium text-gray-900 dark:text-white">Admin</label>
+                    <label for="is-admin-select-edit" class="block text-sm font-medium text-gray-900 dark:text-white">Admin</label>
                     <select name="admin" id="is-admin-select-edit" class="shadow appearance-none border rounded-lg text-sm w-full p-2.5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-white">
                         <option value="1">Yes</option>
                         <option value="0">No</option>

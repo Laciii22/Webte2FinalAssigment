@@ -22,7 +22,7 @@
                 </div>
 
                 <div class="mb-2">
-                    <label for="admin" class="block text-sm font-medium text-gray-900 dark:text-white">Admin</label>
+                    <label for="is-admin-select" class="block text-sm font-medium text-gray-900 dark:text-white">Admin</label>
                     <select name="admin" id="is-admin-select" class="shadow appearance-none border rounded-lg text-sm w-full p-2.5 text-gray-700 leading-tight focus:outline-none focus:shadow-outline dark:bg-gray-700 dark:text-white">
                         <option value="1">Yes</option>
                         <option value="0">No</option>
