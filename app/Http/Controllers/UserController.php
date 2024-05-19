@@ -43,7 +43,7 @@ class UserController extends Controller
         $user->update($attributesToUpdate);
 
         // Redirect back with success message or to a specific route
-        return redirect("/dashboard")->with('success', 'User updated successfully');
+        return redirect("/dashboard-users")->with('success', 'User updated successfully');
     }
 
     public function destroy($user_id)
